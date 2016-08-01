@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+        <title>PHP+jQuery根据IP定位城市</title>
+        <meta name="keywords" content="IP定位,省市联动" />
+        <meta name="description" content="本文将给大家用两种方法演示根据IP定位用户所在城市信息。" />
+        <link rel="stylesheet" type="text/css" href="http://www.sucaihuo.com/jquery/css/common.css" />
+        <style type="text/css">
+            .demo{width:60%; margin:50px auto}
+            .demo h3{height:32px; line-height:32px}
+            .demo p{line-height:24px}
+            pre{margin-top:10px; padding:6px; background:#f7f7f7}
+        </style>
+    </head>
+    <body>
+        <div class="container" id="main">
+            <h2 class="title"><a href="http://www.sucaihuo.com/js/35.html" target="_blank">PHP+jQuery根据IP定位城市</a></h2>
+            <div class="demo">
+                <h3>调用新浪IP库接口</h3>
+                <p>当前城市：</p>
+                <div id="city_1">
+                    <select class="prov"></select> 
+                    <select class="city"></select>
+                </div>
+            </div>
+
+            <div class="demo">
+                <h3>调用QQ纯真IP库接口</h3>
+                <div id="city_2"></div>
+            </div>
+        </div>
+        </div>
+        <script type="text/javascript" src="http://www.sucaihuo.com/Public/js/other/jquery.js"></script>
+        <script type="text/javascript" src="jquery.cityselect.js"></script>
+        <script type="text/javascript" src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>
+        <script type="text/javascript">
+            $(function() {
+                var province = remote_ip_info['province'];//当前省
+                var city = remote_ip_info['city'];//当前市
+                var district = remote_ip_info['district'];//当前区/县
+
+                $("#city_1").citySelect({
+                    prov: province,
+                    city: city
+                });
+                //纯真IP库
+                $.get("ajax.php", function(data) {
+                    $("#city_2").html(data);
+                })
+
+            });
+        </script>
+    </body>
+</html>
+

@@ -1,0 +1,48 @@
+<?php
+function checkAdmin($sql){
+	return fetchOne($sql);
+	
+}
+
+function checkLogin(){
+	if($_SESSION['adminId']==""){
+		alertMes("ÇëÏÈµÇÂ¼", "login.php");
+	}
+}
+
+function addAdmin(){
+	$add['username'] = $_POST['username'];
+	$add['password'] = md5($_POST['password2']);
+	$add['email'] = $_POST['email'];
+	//var_dump($add);
+	//var_dump($_POST);
+	if(insert("shop_admin", $add)){
+		alertMes("Ìí¼Ó³É¹¦£¡", "admin.php");
+	}else{
+		alertMes("Ìí¼ÓÊ§°Ü£¡ÇëÖØÐÂÌí¼Ó", "admin_add.php");
+	}
+}
+
+function getAllAdmin(){
+	$sql = "select id,username,email from bar_admin";
+	$rows = fetchAll($sql);
+	return $rows;
+}
+
+function editAdmin($id){
+	//var_dump($_POST);
+	$arr = $_POST;
+	if (update("bar_admin", $arr,"id={$id}")){
+		alertMes("±à¼­³É¹¦£¡", "admin.php");
+	}else {
+		alertMes("±à¼­Ê§°Ü£¡ÇëÖØÐÂ±à¼­", "admin.php");
+	}
+}
+
+function delAdmin($id){
+	if(delete("bar_admin","id={$id}")){
+		alertMes("É¾³ý³É¹¦£¡", "admin.php");
+	}else {
+		alertMes("É¾³ýÊ§°Ü£¡ÇëÖØÐÂÉ¾³ý", "admin.php");
+	}
+}
